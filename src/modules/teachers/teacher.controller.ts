@@ -2,12 +2,15 @@ import type { Request, Response, NextFunction } from "express";
 import { teacherService } from "./teacher.service";
 import type { CreateTeacher } from "./teacher.schema";
 import { convertStringArgToNumber } from "@/utils/convert";
+import { CreatedResponse, OKResponse } from "@/common/helpers/success";
 
 export const teacherController = {
   getAll: async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const teacher = await teacherService.getAll();
-      res.json(teacher);
+      new CreatedResponse("Professores encontrados com sucesso", teacher).send(
+        res,
+      );
     } catch (err) {
       next(err);
     }
@@ -15,9 +18,11 @@ export const teacherController = {
 
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id = convertStringArgToNumber(req.params.id)
+      const id = convertStringArgToNumber(req.params.id);
       const teacher = await teacherService.getById(id);
-      res.json(teacher);
+      new CreatedResponse("Professor encontrado com sucesso", teacher).send(
+        res,
+      );
     } catch (err) {
       next(err);
     }
@@ -30,7 +35,8 @@ export const teacherController = {
   ) => {
     try {
       const teacher = await teacherService.create(req.body);
-      res.status(201).json(teacher);
+
+      new CreatedResponse("Professor criado com sucesso", teacher).send(res);
     } catch (err) {
       next(err);
     }
@@ -38,12 +44,12 @@ export const teacherController = {
 
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id = convertStringArgToNumber(req.params.id)
+      const id = convertStringArgToNumber(req.params.id);
 
-      const teacher = await teacherService.delete(id)
-      res.json(teacher);
-    } catch(err){
-      next(err)
+      const teacher = await teacherService.delete(id);
+      new OKResponse("Professor excluído com sucesso", teacher).send(res);
+    } catch (err) {
+      next(err);
     }
-  }
+  },
 };

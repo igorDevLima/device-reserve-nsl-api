@@ -2,12 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { deviceService } from "./device.service";
 import { CreateDevice } from "./device.schema";
 import { convertStringArgToNumber } from "@/utils/convert";
+import { CreatedResponse, OKResponse } from "@/common/helpers/success";
 
 export const deviceController = {
   getAll: async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const device = await deviceService.getAll();
-      res.json(device);
+      new OKResponse("Dispositivos encontrados com sucesso", device).send(res);
     } catch (err) {
       next(err);
     }
@@ -20,7 +21,7 @@ export const deviceController = {
   ) => {
     try {
       const device = await deviceService.create(req.body);
-      res.status(201).json(device);
+      new CreatedResponse("Dispositivo criado com sucesso", device).send(res);
     } catch (err) {
       next(err);
     }
@@ -29,8 +30,8 @@ export const deviceController = {
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = convertStringArgToNumber(req.params.id);
-      const deleteDevice = await deviceService.delete(id);
-      res.json(deleteDevice);
+      const device = await deviceService.delete(id);
+      new OKResponse("Dispositivo excluido com sucesso", device).send(res);
     } catch (err) {
       next(err);
     }
