@@ -8,11 +8,11 @@ export const deviceService = {
 
   create: (data: CreateDevice) => deviceRepository.create(data),
 
-  delete: (id:ID) => {
-    const device = deviceRepository.findById(id)
+  delete: async (id:ID) => {
+    const device = await deviceRepository.findById(id)
 
-    if (!device) throw new NotFoundError('Dispositivo não encontrado')
-      
-    deviceRepository.delete(id)
+    if (!device) throw new NotFoundError('Dispositivo não encontrado');
+
+    return deviceRepository.delete(id)
   }
 };
