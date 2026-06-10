@@ -1,7 +1,7 @@
 import { ID } from "@/types";
 import { teacherRepository } from "./teacher.repository";
 import type { CreateTeacher } from "./teacher.schema";
-import { NotFoundError } from "@/common/helpers/error";
+import { BadRequestError, NotFoundError } from "@/common/helpers/error";
 
 export const teacherService = {
   getAll: () => teacherRepository.findAll(),
@@ -10,7 +10,7 @@ export const teacherService = {
     const teacher = await teacherRepository.findById(id);
 
     if (!teacher) throw new NotFoundError("Professor não encontrado");
-    
+
     return teacher;
   },
 
@@ -19,7 +19,7 @@ export const teacherService = {
   delete: async (id: ID) => {
     const teacher = await teacherRepository.findById(id);
 
-    if (!teacher) throw new Error("Professor não encontrado");
+    if (!teacher) throw new BadRequestError("Professor não encontrado");
 
     return teacherRepository.delete(id);
   },
