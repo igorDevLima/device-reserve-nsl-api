@@ -15,7 +15,7 @@ export const teacherController = {
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-      const teacher = await teacherService.getById(id);
+      const teacher = await teacherService.getById(Number(id));
       res.json(teacher);
     } catch (err) {
       next(err);
