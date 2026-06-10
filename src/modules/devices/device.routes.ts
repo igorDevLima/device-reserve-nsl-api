@@ -8,3 +8,4 @@ export const deviceRouter = Router()
 
 deviceRouter.get('/', deviceController.getAll)
 deviceRouter.post('/', validate(createDeviceSchema), deviceController.create)
+deviceRouter.delete('/:id', deviceController.delete)
