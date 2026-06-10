@@ -7,4 +7,5 @@ export const teacherRouter = Router()
 
 teacherRouter.get('/', teacherController.getAll)
 teacherRouter.get('/:id', teacherController.getById)
+teacherRouter.delete('/:id', teacherController.delete)
 teacherRouter.post('/', validate(createTeacherSchema), teacherController.create)

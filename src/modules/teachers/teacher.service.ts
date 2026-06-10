@@ -14,4 +14,12 @@ export const teacherService = {
 
   create: (data: CreateTeacher) =>
     teacherRepository.create(data),
+
+  delete: async (id: ID) => {
+    const teacher = await teacherRepository.findById(id)
+
+    if (!teacher) throw new Error('Professor não encontrado')
+
+    return teacherRepository.delete(id)
+  }
 }

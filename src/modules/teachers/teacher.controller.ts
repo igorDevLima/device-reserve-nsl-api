@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { teacherService } from "./teacher.service";
 import type { CreateTeacher } from "./teacher.schema";
+import { convertStringArgToNumber } from "@/utils/convert";
 
 export const teacherController = {
   getAll: async (_req: Request, res: Response, next: NextFunction) => {
@@ -14,8 +15,8 @@ export const teacherController = {
 
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-      const teacher = await teacherService.getById(Number(id));
+      const id = convertStringArgToNumber(req.params.id)
+      const teacher = await teacherService.getById(id);
       res.json(teacher);
     } catch (err) {
       next(err);
@@ -34,4 +35,15 @@ export const teacherController = {
       next(err);
     }
   },
+
+  delete: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = convertStringArgToNumber(req.params.id)
+
+      const teacher = await teacherService.delete(id)
+      res.json(teacher);
+    } catch(err){
+      next(err)
+    }
+  }
 };
