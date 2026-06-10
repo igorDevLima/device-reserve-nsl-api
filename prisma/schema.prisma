@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Teacher {
+  id           Int           @id @default(autoincrement())
+  name         String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  reservations Reservation[]
+}
+
+model Reservation {
+  id                   Int      @id @default(autoincrement())
+  device               Device   @relation(fields: [device_id, device_name], references: [id, name])
+  device_id            Int
+  device_name          String
+  reservation_quantity Int
+  refunded             Boolean  @default(false)
+  refundedAt           DateTime
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  teacher              Teacher? @relation(fields: [teacherId], references: [id])
+  teacherId            Int?
+}
+
+model Device {
+  id                 Int           @id @default(autoincrement())
+  name               String        @unique
+  available_quantity Int           @default(20)
+  max_quantity       Int           @default(20)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  reservations       Reservation[]
+
+  @@unique([id, name])
+}
