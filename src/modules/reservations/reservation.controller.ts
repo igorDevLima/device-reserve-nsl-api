@@ -64,7 +64,7 @@ export const reservationController = {
           "Não foi possível encontrar o dispositivo, certifique-se que o dispositivo não foi deletado!",
         );
 
-      const update_reservation = reservationService.update(reservation.id, {
+      const update_reservation = await reservationService.update(reservation.id, {
         ...reservation,
         refunded: true,
         refundedAt: new Date(),
