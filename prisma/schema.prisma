@@ -5,9 +5,6 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-
-
-  url = "file:/data/prod.db" 
 }
 
 model Reservation {
