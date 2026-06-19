@@ -6,7 +6,7 @@ RUN apk add --no-cache python3 make g++
 COPY package*.json ./
 RUN npm install
 COPY prisma ./prisma
-COPY prisma.config.ts ./          # ← ADICIONAR (antes do prisma generate)
+COPY prisma.config.ts ./  
 RUN npx prisma generate
 COPY tsconfig.json ./
 COPY src ./src
@@ -22,6 +22,6 @@ COPY package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY prisma ./prisma
-COPY prisma.config.ts ./          # ← ADICIONAR (antes do CMD)
+COPY prisma.config.ts ./       
 EXPOSE 3000
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]
