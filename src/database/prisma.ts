@@ -6,7 +6,7 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-const dbPath = "file:./dev.db";
+const dbPath = "file:/data/prod.db";
 
 const adapter = new PrismaBetterSqlite3({
   url: dbPath,
