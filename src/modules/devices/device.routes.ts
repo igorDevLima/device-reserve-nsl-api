@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validate } from '@/middlewares/validate.middleware'
+import { validate } from '@/common/middlewares/validate.middleware'
 import { deviceController } from './device.controller'
 import { createDeviceSchema } from './device.schema'
 

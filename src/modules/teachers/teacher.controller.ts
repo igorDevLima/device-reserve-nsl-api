@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { teacherService } from "./teacher.service";
 import type { CreateTeacher } from "./teacher.schema";
-import { convertStringArgToNumber } from "@/utils/convert";
+import { convertStringArgToNumber } from "@/common/utils/convert";
 import { CreatedResponse, OKResponse } from "@/common/helpers/success";
 
 export const teacherController = {

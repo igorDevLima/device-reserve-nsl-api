@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { teacherController } from './teacher.controller'
-import { validate } from '@/middlewares/validate.middleware'
+import { validate } from '@/common/middlewares/validate.middleware'
 import { createTeacherSchema } from './teacher.schema'
 
 export const teacherRouter = Router()

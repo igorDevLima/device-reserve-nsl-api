@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { deviceService } from "./device.service";
 import { CreateDevice } from "./device.schema";
-import { convertStringArgToNumber } from "@/utils/convert";
+import { convertStringArgToNumber } from "@/common/utils/convert";
 import { CreatedResponse, OKResponse } from "@/common/helpers/success";
 
 export const deviceController = {

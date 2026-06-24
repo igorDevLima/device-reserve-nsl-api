@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { convertStringArgToNumber } from "@/utils/convert";
+import { convertStringArgToNumber } from "@/common/utils/convert";
 import { CreatedResponse, OKResponse } from "@/common/helpers/success";
 import { reservationService } from "./reservation.service";
 import { CreateReservation } from "./reservation.schema";

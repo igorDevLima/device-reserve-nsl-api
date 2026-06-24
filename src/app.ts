@@ -1,6 +1,6 @@
 import express from 'express'
 import { teacherRouter } from './modules/teachers/teacher.routes'
-import { errorHandler } from './middlewares/error.middleware'
+import { errorHandler } from './common/middlewares/error.middleware'
 import { deviceRouter } from './modules/devices/device.routes'
 import { reservationRouter } from './modules/reservations/reservation.routes'
 
