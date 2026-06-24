@@ -1,16 +1,21 @@
-import express from 'express'
-import { teacherRouter } from './modules/teachers/teacher.routes'
-import { errorHandler } from './common/middlewares/error.middleware'
-import { deviceRouter } from './modules/devices/device.routes'
-import { reservationRouter } from './modules/reservations/reservation.routes'
+import express from "express";
+import { teacherRouter } from "./modules/teachers/teacher.routes";
+import { errorHandler } from "./common/middlewares/error.middleware";
+import { deviceRouter } from "./modules/devices/device.routes";
+import { reservationRouter } from "./modules/reservations/reservation.routes";
+import helmet from "helmet";
 
-export const app = express()
+export const app = express();
 
-app.use(express.json())
+app.use(helmet());
 
-app.get('/health', (_req, res) => res.json({ status: 'ok' }))
-app.use('/api/teachers', teacherRouter)
-app.use('/api/devices', deviceRouter)
-app.use('/api/reservations', reservationRouter)
+app.disable("x-powered-by");
 
-app.use(errorHandler)
+app.use(express.json());
+
+app.get("/health", (_req, res) => res.json({ status: "ok" }));
+app.use("/api/teachers", teacherRouter);
+app.use("/api/devices", deviceRouter);
+app.use("/api/reservations", reservationRouter);
+
+app.use(errorHandler);
