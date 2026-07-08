@@ -4,10 +4,12 @@ import { errorHandler } from "./common/middlewares/error.middleware";
 import { deviceRouter } from "./modules/devices/device.routes";
 import { reservationRouter } from "./modules/reservations/reservation.routes";
 import helmet from "helmet";
+import cors from 'cors';
 
 export const app = express();
 
 app.use(helmet());
+app.use(cors()); 
 
 app.disable("x-powered-by");
 
