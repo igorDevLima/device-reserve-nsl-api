@@ -8,6 +8,8 @@ export const reservationService = {
 
   getById: (id: ID) => reservationRepository.findById(id),
 
+  getAllByDeviceId:(id: ID)=> reservationRepository.findAllByDeviceId(id),
+
   create: (data: CreateReservation) => reservationRepository.create(data),
 
   update:(id: ID, data: UpdateReservation) => reservationRepository.update(id, data),

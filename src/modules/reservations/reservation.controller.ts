@@ -28,17 +28,25 @@ export const reservationController = {
       const teacher = await teacherService.getById(teacher_id);
       const device = await deviceService.getById(device_id);
 
+      const available_quantity = (
+        await reservationService.getAllByDeviceId(device_id)
+      ).filter(({ refundedAt }) => !refundedAt).length;
+
       if (!teacher) throw new BadRequestError("Professor não encontrado!");
 
       if (!device) throw new BadRequestError("Dispositivo não encontrado!");
 
-      if (device.available_quantity < reservation_quantity)
-        throw new BadRequestError("Quantidade solicitada indisponível! Há apenas " + device.available_quantity + " disponíveis");
+      if (available_quantity < reservation_quantity)
+        throw new BadRequestError(
+          "Quantidade solicitada indisponível! Há apenas " +
+            available_quantity +
+            " disponíveis",
+        );
 
       const reservation = await reservationService.create(req.body);
       await deviceService.update(device.id, {
         ...device,
-        available_quantity: device.available_quantity - reservation_quantity,
+        available_quantity: available_quantity - reservation_quantity,
       });
       new CreatedResponse("Reserva criada com sucesso", reservation).send(res);
     } catch (err) {
@@ -64,11 +72,14 @@ export const reservationController = {
           "Não foi possível encontrar o dispositivo, certifique-se que o dispositivo não foi deletado!",
         );
 
-      const update_reservation = await reservationService.update(reservation.id, {
-        ...reservation,
-        refunded: true,
-        refundedAt: new Date(),
-      });
+      const update_reservation = await reservationService.update(
+        reservation.id,
+        {
+          ...reservation,
+          refunded: true,
+          refundedAt: new Date(),
+        },
+      );
 
       await deviceService.update(device.id, {
         ...device,

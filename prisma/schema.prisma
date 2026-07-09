@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  
 }
 
 datasource db {
@@ -8,16 +7,18 @@ datasource db {
 }
 
 model Reservation {
-  id                   Int      @id @default(autoincrement())
-  device               Device   @relation(fields: [device_id], references: [id])
+  id                   Int       @id @default(autoincrement())
+  device               Device    @relation(fields: [device_id], references: [id])
   device_id            Int
   reservation_quantity Int
-  refunded             Boolean  @default(false)
-  refundedAt           DateTime? 
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-  teacher              Teacher @relation(fields: [teacher_id], references: [id])
-  teacher_id            Int
+  refunded             Boolean   @default(false)
+  refundedAt           DateTime?
+  start_date           DateTime  @default(now())
+  end_date             DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  teacher              Teacher   @relation(fields: [teacher_id], references: [id])
+  teacher_id           Int
 }
 
 model Teacher {
@@ -29,8 +30,6 @@ model Teacher {
 
   @@unique([id, name])
 }
-
-
 
 model Device {
   id                 Int           @id @default(autoincrement())
